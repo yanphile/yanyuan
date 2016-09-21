@@ -124,15 +124,36 @@
 			function rnd(m,n){
 				return Math.floor(Math.random()*(n-m)+m);
 			}
-			function star(){
-				var op=$('<p></p>').text('★').css('color','rgb('+0+','+255+','+255+')');
+			function downstar(){
+				var op=$('<p></p>').text('★').css({
+					fontSize:rnd(10,30)+'px',
+					'color':'rgb('+rnd(0,256)+','+rnd(0,256)+','+rnd(0,256)+')',
+					left:rnd(2,w)+'px',
+					top:rnd(-500,-10)+'px'
+				});
 				$('body').append(op);
-				op.animate({top:h,opacity:0},10000,function(){
+				op.animate({top:rnd(h/3,1.2*h),opacity:0},10000+rnd(1000,5000),function(){
 					$(this).remove();
+					downstar();
 				})
 
 			}
-			star();
+			for (var i = 0; i < 50; i++) {
+				downstar();
+			}
+			function upstar(){
+				var op=$('<p></p>').text('★').css({
+					'color':'rgb('+rnd(0,256)+','+rnd(0,256)+','+rnd(0,256)+')',
+					left:rnd(2,w)+'px',
+					top:rnd(1.2*h,2*h)+'px'
+				});
+				$('body').append(op);
+				op.animate({top:rnd(0,-h),left:rnd(-w,2*w),opacity:0},1000+rnd(10000,50000),function(){
+					$(this).remove();
+					setTimeout(upstar(),20000);
+				})
+			}
+			upstar();
 
 	})
 		
